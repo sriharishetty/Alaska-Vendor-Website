@@ -16,10 +16,6 @@ import {
   sanitizeEmailHtml,
   validateOutlookWebLink
 } from '../admin-react/src/types/vendorMaintenance.js';
-import {
-  isSharePointConfigured,
-  createSharePointMaintenanceItem
-} from './sharepointAdapter.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -252,7 +248,6 @@ export function createVendorMaintenanceServer(options = {}) {
   function getIntegrationState() {
     if (
       state.settings.webhookConfigured ||
-      isSharePointConfigured() ||
       Boolean(state.lastSyncAt) ||
       state.records.length > 0
     ) {
@@ -410,15 +405,6 @@ export function createVendorMaintenanceServer(options = {}) {
           );
         } else {
           state.records.unshift(result.record);
-        }
-
-        // Optional SharePoint List persistence when configured
-        if (isSharePointConfigured()) {
-          try {
-            await createSharePointMaintenanceItem(result.record);
-          } catch (spErr) {
-            result.record.processingError = `Saved locally; SharePoint sync warning: ${spErr.message}`;
-          }
         }
 
         await persistState();

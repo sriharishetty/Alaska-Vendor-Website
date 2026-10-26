@@ -2,7 +2,7 @@
 
 **Application:** Production Operations Connect (Alaska Airlines IT Operations)  
 **Module:** Vendor Maintenance (`/vendor-maintenance` / `vendor-maintenance.html`)  
-**Primary Integration Path:** Microsoft Outlook (`Vendor Maintenance` Folder) -> Power Automate (`When a new email arrives (V3)`) -> Backend Ingestion API (`/api/vendor-maintenance/email-intake`) -> SharePoint List (`VendorMaintenanceUpdates`) or Local JSON Storage -> React Dashboard (`Vendor Maintenance`)
+**Primary Integration Path:** Microsoft Outlook (`Vendor Maintenance` Folder) -> Power Automate (`When a new email arrives (V3)`) -> Backend Ingestion API (`/api/vendor-maintenance/email-intake`) -> Local JSON Storage (`server/data/vendor-maintenance-db.json`) -> React Dashboard (`Vendor Maintenance`)
 
 ---
 
@@ -16,12 +16,12 @@ flowchart LR
     O --> PA["Power Automate Flow\nWhen a new email arrives (V3)"]
     PA -->|"POST /api/vendor-maintenance/email-intake\nX-Webhook-Secret"| API["Vendor Maintenance Backend API\n(server/index.mjs)"]
     API --> EXT["Rule-Based Extraction Engine\nVendor / App / Window / Status"]
-    EXT --> SP["Storage Layer\nSharePoint List (VendorMaintenanceUpdates)\nor Local JSON DB"]
-    SP --> UI["Production Operations Connect\nVendor Maintenance Page & Admin Console"]
+    EXT --> DB["Storage Layer\nLocal JSON DB (server/data/vendor-maintenance-db.json)"]
+    DB --> UI["Production Operations Connect\nVendor Maintenance Page & Admin Console"]
 ```
 
 ### Core Architectural Principles
-1. **Zero Secret Exposure in Frontend:** The browser client (`vendor-maintenance.html` and `admin-react`) never holds Microsoft Graph secrets, Entra ID client secrets, or webhook tokens.
+1. **Zero Secret Exposure in Frontend:** The browser client (`vendor-maintenance.html` and `admin-react`) never holds backend secrets or webhook tokens.
 2. **Preserve Original Vendor Evidence:** Every ingested record stores the verbatim `emailSubject`, `emailBodyText`, and raw `emailBodyHtml` (sanitized before rendering) alongside the automated `extractedSummary` so operators can always verify the vendor's exact wording.
 3. **Strict Status & Timezone Discipline:**
    - Incoming incident/outage emails are **never** marked `Completed` simply because an email arrived; completion requires explicit resolution confirmation (`resolved`, `restored`, `all clear`, `maintenance completed`) or an authorized operator status update.
@@ -32,12 +32,10 @@ flowchart LR
 
 ## 2. Microsoft 365 Prerequisites
 
-Before configuring the automated pipeline, ensure the following Microsoft 365 resources are available:
+Before configuring the automated pipeline, ensure the following resources are available:
 
 - **Exchange Online Mailbox:** A dedicated shared or operations mailbox (recommended: `vendor-maintenance@alaskaair.com` or `noc-vendor-updates@alaskaair.com`) accessible by the IT Operations service account.
-- **Power Automate License:** Standard Microsoft 365 Power Automate license ( plus Premium connector license if using the direct `HTTP` action to call the backend webhook API, or standard SharePoint connector if writing directly to the `VendorMaintenanceUpdates` SharePoint list).
-- **SharePoint Online Site (Optional / Recommended for Enterprise Storage):** An operations SharePoint site hosting the `VendorMaintenanceUpdates` list.
-- **Microsoft Entra ID (Azure AD) App Registration (Optional):** Required only when the backend server uses `VENDOR_MAINTENANCE_STORAGE_PROVIDER=sharepoint-graph` to read/write SharePoint list items via Microsoft Graph API.
+- **Power Automate License:** Standard Microsoft 365 Power Automate license (plus Premium connector license if using the direct `HTTP` action to call the backend webhook API).
 
 ---
 
@@ -101,7 +99,7 @@ Add a **Condition** control to ignore internal auto-replies:
 - **AND** `Subject` **does not contain** `Automatic reply:`
 
 ### Step 3: Action (If Yes) — HTTP POST to Backend Ingestion API
-Add an **HTTP** action (or **Create item (SharePoint)** if writing directly to SharePoint first):
+Add an **HTTP** action:
 - **Method:** `POST`
 - **URI:** `https://<your-backend-host>/api/vendor-maintenance/email-intake` (or `http://localhost:4050/api/vendor-maintenance/email-intake` via on-premises gateway / tunnel during testing)
 - **Headers:**
@@ -142,59 +140,45 @@ Add an **HTTP** action (or **Create item (SharePoint)** if writing directly to S
 
 ---
 
-## 7. SharePoint List Schema (`VendorMaintenanceUpdates`)
+## 7. Persistent Record Schema (`vendor-maintenance-db.json`)
 
-When using SharePoint Online as the persistent store, create a list named **`VendorMaintenanceUpdates`** with the following columns:
+The standalone backend persists structured maintenance records in `server/data/vendor-maintenance-db.json` with the following fields:
 
-| Column Internal Name | SharePoint Type | Required | Indexed | Notes |
+| Field Name | Type | Required | Indexed | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `Title` | Single line of text | Yes | Yes | Internal record ID (`vmu-...`) |
-| `VendorId` | Single line of text | No | Yes | Matches `master-data.js` vendor ID (e.g., `sita`, `smart4aviation`) |
-| `VendorName` | Single line of text | Yes | Yes | Matched vendor name or `"Unknown"` |
-| `SenderEmail` | Single line of text | Yes | Yes | Normalized lowercase sender email |
-| `SenderDisplayName` | Single line of text | No | No | Display name from email header |
-| `EmailSubject` | Single line of text | Yes | No | Original email subject |
-| `EmailBodyText` | Multiple lines of text (Plain) | No | No | Preserved plain-text email body |
-| `EmailBodyHtml` | Multiple lines of text (Plain) | No | No | Raw HTML body (sanitized before UI render) |
-| `ReceivedDate` | Date and Time (UTC) | Yes | Yes | ISO-8601 UTC timestamp |
-| `UpdateType` | Choice | Yes | Yes | `Scheduled Maintenance`, `Service Outage`, `Application Update`, `Security Advisory`, `Performance Degradation`, `General Announcement`, `Unknown / Requires Classification` |
-| `ApplicationName` | Single line of text | No | Yes | Matched application (e.g., `ACARS`, `WAM`, `S4A`) or `"Unknown"` |
-| `MaintenanceStart` | Date and Time (UTC) | No | Yes | Extracted window start or null |
-| `MaintenanceEnd` | Date and Time (UTC) | No | No | Extracted window end or null |
-| `TimeZone` | Single line of text | No | No | Explicit timezone (e.g., `UTC`, `America/Los_Angeles`) or `"Unknown"` |
-| `Status` | Choice | Yes | Yes | `New`, `Scheduled`, `In Progress`, `Investigating`, `Completed`, `Cancelled`, `Requires Review` |
-| `Severity` | Choice | No | No | `Critical`, `High`, `Medium`, `Low`, `Unknown` |
-| `OperationalImpact` | Multiple lines of text | No | No | Extracted operational impact statement |
-| `ExtractedSummary` | Multiple lines of text | No | No | Automated summary distinct from original email |
-| `OriginalEmailWebLink` | Hyperlink or text | No | No | Validated `outlook.office.com` / `outlook.office365.com` link |
-| `OutlookMessageId` | Single line of text | Yes | Yes | Exchange message ID |
-| `OutlookInternetMessageId` | Single line of text | No | Yes | RFC 5322 Message-ID for deduplication |
-| `ConversationId` | Single line of text | No | Yes | Used for correlating follow-up/cancellation emails |
-| `SourceMailbox` | Single line of text | Yes | No | Monitored mailbox address |
-| `FolderName` | Single line of text | No | No | Monitored folder name (`Vendor Maintenance`) |
-| `ProcessingStatus` | Choice | Yes | Yes | `Processed`, `Processed with Warnings`, `Failed` |
-| `ProcessingError` | Multiple lines of text | No | No | Validation/timezone/matching warnings |
-| `AttachmentsJson` | Multiple lines of text | No | No | Safe metadata JSON array (`fileName`, `size`, `contentType`) |
-| `ProcessingHistoryJson` | Multiple lines of text | No | No | Audit log JSON array |
-| `LastProcessedAt` | Date and Time (UTC) | Yes | No | Most recent processing timestamp |
+| `id` | String | Yes | Yes | Internal record ID (`vmu-...`) |
+| `vendorId` | String | No | Yes | Matches `master-data.js` vendor ID (e.g., `sita`, `smart4aviation`) |
+| `vendorName` | String | Yes | Yes | Matched vendor name or `"Unknown"` |
+| `senderEmail` | String | Yes | Yes | Normalized lowercase sender email |
+| `emailSubject` | String | Yes | No | Original email subject |
+| `emailBodyText` | String | No | No | Preserved plain-text email body |
+| `emailBodyHtml` | String | No | No | Raw HTML body (sanitized before UI render) |
+| `receivedDate` | ISO-8601 UTC | Yes | Yes | ISO-8601 UTC timestamp |
+| `updateType` | Choice | Yes | Yes | `Scheduled Maintenance`, `Service Outage`, `Application Update`, `Security Advisory`, `Performance Degradation`, `General Announcement`, `Unknown / Requires Classification` |
+| `applicationName` | String | No | Yes | Matched application (e.g., `ACARS`, `WAM`, `S4A`) or `"Unknown"` |
+| `maintenanceStart` | ISO-8601 UTC | No | Yes | Extracted window start or null |
+| `maintenanceEnd` | ISO-8601 UTC | No | No | Extracted window end or null |
+| `timeZone` | String | No | No | Explicit timezone (e.g., `UTC`, `America/Los_Angeles`) or `"Not provided"` |
+| `status` | Choice | Yes | Yes | `New`, `Scheduled`, `In Progress`, `Investigating`, `Completed`, `Cancelled`, `Requires Review` |
+| `severity` | Choice | No | No | `Critical`, `High`, `Medium`, `Low`, `Unknown` |
+| `operationalImpact` | String | No | No | Extracted operational impact statement |
+| `extractedSummary` | String | No | No | Automated summary distinct from original email |
+| `originalEmailWebLink` | URL / String | No | No | Validated `outlook.office.com` / `outlook.office365.com` link |
+| `outlookMessageId` | String | Yes | Yes | Exchange message ID |
+| `outlookInternetMessageId` | String | No | Yes | RFC 5322 Message-ID for deduplication |
+| `conversationId` | String | No | Yes | Used for correlating follow-up/cancellation emails |
+| `sourceMailbox` | String | Yes | No | Monitored mailbox address |
+| `processingStatus` | Choice | Yes | Yes | `Processed`, `Completed with Review Flag`, `Failed` |
+| `processingError` | String | No | No | Validation/timezone/matching warnings |
+| `attachments` | Array | No | No | Safe metadata JSON array (`fileName`, `size`, `contentType`) |
+| `processingHistory` | Array | No | No | Audit log array |
+| `lastProcessedAt` | ISO-8601 UTC | Yes | No | Most recent processing timestamp |
 
 ---
 
-## 8. Azure / Entra ID App Registration (Optional for Direct Graph Storage)
+## 8. API Authentication
 
-If using `VENDOR_MAINTENANCE_STORAGE_PROVIDER=sharepoint-graph`:
-
-1. Open **Microsoft Entra Admin Center** (`https://entra.microsoft.com`) -> **Identity -> Applications -> App registrations -> New registration**.
-2. **Name:** `ProductionOperationsConnect-VendorMaintenance-API`
-3. **Supported account types:** `Accounts in this organizational directory only (Single tenant)`.
-4. Under **Certificates & secrets**, create a **New client secret** and store its value securely in Azure Key Vault or your server `.env` file (`AZURE_CLIENT_SECRET`).
-5. Record the **Application (client) ID** (`AZURE_CLIENT_ID`) and **Directory (tenant) ID** (`AZURE_TENANT_ID`).
-
----
-
-## 9. API Authentication
-
-All write/mutation endpoints on the backend API (`POST /api/vendor-maintenance/email-intake`, `POST /api/vendor-maintenance/Simulate-intake`, `PATCH /api/vendor-maintenance/:id`, `POST /api/vendor-maintenance/:id/reprocess`, `PUT /api/vendor-maintenance/settings`) require authentication via either:
+All write/mutation endpoints on the backend API (`POST /api/vendor-maintenance/email-intake`, `PATCH /api/vendor-maintenance/:id`, `POST /api/vendor-maintenance/:id/reprocess`, `PUT /api/vendor-maintenance/admin/settings`) require authentication via either:
 
 - **Header:** `X-Webhook-Secret: <VENDOR_MAINTENANCE_WEBHOOK_SECRET>`
 - **Header:** `Authorization: Bearer <VENDOR_MAINTENANCE_WEBHOOK_SECRET>`
@@ -203,39 +187,31 @@ Requests missing a valid token are rejected with `401 Unauthorized`.
 
 ---
 
-## 10. Required Permissions
+## 9. Required Permissions
 
 Follow the principle of least privilege:
 
 - **Power Automate Account:** Read access only to the `Vendor Maintenance` mailbox folder (`Mail.Read` or `Mail.Read.Shared` scoped to the operations mailbox).
-- **Entra ID App (if using SharePoint Graph):**
-  - `Sites.Selected` (recommended) granted `Write` permission specifically on the Operations SharePoint site via `POST /sites/{siteId}/permissions`.
-  - Avoid tenant-wide `Sites.FullControl.All` or `Mail.ReadWrite`.
 
 ---
 
-## 11. Environment Variables
+## 10. Environment Variables
 
 Copy `.env.example` to `.env` before starting the backend service:
 
 | Variable | Purpose | Required |
 | :--- | :--- | :--- |
-| `VENDOR_MAINTENANCE_PORT` | HTTP port for backend server (default `4050`) | Yes |
+| `VENDOR_MAINTENANCE_PORT` | HTTP port for backend server (default `4050` / `8787`) | Yes |
 | `VENDOR_MAINTENANCE_WEBHOOK_SECRET` | Shared secret authenticating Power Automate & admin actions | Yes |
 | `OUTLOOK_MONITORED_MAILBOX` | Monitored Outlook mailbox address | Yes |
 | `OUTLOOK_MONITORED_FOLDER_NAME` | Target folder (`Vendor Maintenance`) | Yes |
 | `OUTLOOK_APPROVED_SENDER_DOMAINS` | Comma-separated approved sender domains | Optional |
-| `VENDOR_MAINTENANCE_STORAGE_PROVIDER` | `local-json` or `sharepoint-graph` | Yes |
-| `AZURE_TENANT_ID` | Entra ID Tenant GUID (when using `sharepoint-graph`) | Conditional |
-| `AZURE_CLIENT_ID` | Entra ID App Client GUID | Conditional |
-| `AZURE_CLIENT_SECRET` | Entra ID App Client Secret | Conditional |
-| `SHAREPOINT_SITE_ID` | Target SharePoint Site ID | Conditional |
-| `SHAREPOINT_MAINTENANCE_LIST_ID` | SharePoint List Name (`VendorMaintenanceUpdates`) | Conditional |
+| `VENDOR_MAINTENANCE_STORAGE_PROVIDER` | `local-json` | Yes |
 | `VITE_VENDOR_MAINTENANCE_API_URL` | Frontend API base URL | Optional |
 
 ---
 
-## 12. Local Development Setup
+## 11. Local Development Setup
 
 1. **Copy Environment Variables:**
    ```powershell
@@ -245,9 +221,9 @@ Copy `.env.example` to `.env` before starting the backend service:
    ```powershell
    node server/index.mjs
    ```
-   The API server starts on `http://localhost:4050/api/vendor-maintenance`.
+   The API server starts on `http://localhost:8787/api/vendor-maintenance`.
 3. **Open Production Operations Connect:**
-   - Open `vendor-maintenance.html` directly or serve the project directory over HTTP.
+   - Open `home.html` or `vendor-maintenance.html` directly or serve the project directory over HTTP.
    - To rebuild the frontend bundles after modifying React components in `admin-react/src`:
      ```powershell
      node admin-react/scripts/build-file-bundle.mjs
@@ -255,13 +231,13 @@ Copy `.env.example` to `.env` before starting the backend service:
 
 ---
 
-## 13. Production Deployment Steps
+## 12. Production Deployment Steps
 
-1. Deploy `server/index.mjs` and `server/sharepointAdapter.mjs` to an internal Node.js service host (Azure App Service, Container Apps, or IIS/Windows Service).
-2. Configure environment variables (`VENDOR_MAINTENANCE_WEBHOOK_SECRET`, `VENDOR_MAINTENANCE_STORAGE_PROVIDER=sharepoint-graph`, and Entra/SharePoint IDs) in Azure App Service Configuration / Key Vault.
+1. Deploy `server/index.mjs` to an internal Node.js service host (Azure App Service, Container Apps, or IIS/Windows Service).
+2. Configure environment variables (`VENDOR_MAINTENANCE_WEBHOOK_SECRET` and `VENDOR_MAINTENANCE_STORAGE_PROVIDER=local-json`) in your host configuration.
 3. Ensure HTTPS/TLS termination is enforced on the webhook endpoint (`https://<host>/api/vendor-maintenance/email-intake`).
 4. Build the static frontend bundle (`admin-react/scripts/build-file-bundle.mjs`) and deploy the static files (`vendor-maintenance.html`, `js/vendor-maintenance.bundle.js`, `css/vendor-maintenance.css`, `admin-react-dist/`) to the internal web host.
-5. Enable the Power Automate flow and verify health via `GET /api/vendor-maintenance/health`.
+5. Enable the Power Automate flow and verify health via `GET /api/vendor-maintenance/summary`.
 
 ---
 

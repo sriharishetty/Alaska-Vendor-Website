@@ -9,10 +9,8 @@
 	--login-pale: #eaf4fb;
 	min-height: 100vh;
 	height: 100vh;
-	display: grid;
 	display: grid;	grid-template-columns: minmax(0, 1fr);
 	place-items: center;
-	overflow-y: auto;
 	width: 100%;	box-sizing: border-box;	overflow-x: hidden;	overflow-y: auto;
 	padding: 28px;
 	background: linear-gradient(135deg, #f2f7fb 0%, #e4f2fb 52%, #f4f9fc 100%);
@@ -23,7 +21,6 @@
 	isolation: isolate;
 	overflow: hidden;
 	width: min(456px, 100%);
-	display: grid;
 	display: grid;	grid-template-columns: minmax(0, 1fr);
 	gap: 16px;
 	padding: 0 0 24px;
@@ -46,7 +43,6 @@
 .login.login form > * { position: relative; z-index: 1; }
 
 .login.login .login-brand {
-	display: grid;
 	display: grid;	grid-template-columns: minmax(0, 1fr);
 	justify-items: center;
 	width: 100%;
@@ -124,7 +120,6 @@
 	.login.login .login-brand { padding: 26px 17px 23px; }
 	.login.login .login-brand h1 { font-size: 24px; }
 	.login.login label, .login.login .error, .login.login .sign-in,
-	.login.login .access-message, .login.login .security-note { margin-right: 19px; margin-left: 19px; }
 	.login.login .access-message, .login.login .security-note, .login.login .return-portal-link { margin-right: 19px; margin-left: 19px; }
 }
 
@@ -885,8 +880,6 @@ textarea {
     text-align: left !important;
 }
 
-.app > .login.login {
-    grid-column: 2;
 .login.login {
     min-width: 0;
     width: 100%;

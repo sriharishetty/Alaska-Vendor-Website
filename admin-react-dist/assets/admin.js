@@ -23973,8 +23973,6 @@ const DEFAULT_ADMIN_SETTINGS = {
   outlookFolder: "Vendor Maintenance",
   sourceMailbox: "",
   mailboxType: "shared",
-  sharePointSiteUrl: "",
-  sharePointListName: "VendorMaintenanceUpdates",
   storageProvider: "local-json",
   defaultTimeZone: "America/Los_Angeles (PDT/PST)",
   showProcessingFailures: true,
