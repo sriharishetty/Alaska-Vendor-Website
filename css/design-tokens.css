@@ -1,0 +1,37 @@
+/* Production Operations Connect visual tokens */
+:root {
+    --aag-navy: #003366;
+    --aag-navy-deep: #002943;
+    --aag-aviation: #004b76;
+    --aag-blue: #0074c8;
+    --aag-blue-hover: #005fa5;
+    --aag-sky: #00a6d6;
+    --aag-sky-readable: #42c4e3;
+    --aag-blue-soft: #eaf7fc;
+    --aag-section-blue: #ddf3fa;
+    --aag-ink: #17324d;
+    --aag-muted: #536b80;
+    --aag-subtle: #6b8294;
+    --aag-canvas: #f0f6fa;
+    --aag-surface: #ffffff;
+    --aag-surface-alt: #f6fbfd;
+    --aag-border: #d4e3ed;
+    --aag-border-strong: #abc6d8;
+    --aag-success: #18794e;
+    --aag-warning: #a15c00;
+    --aag-danger: #b42335;
+    --aag-sidebar-blue-start: #003B71;
+    --aag-sidebar-blue-mid: #004F88;
+    --aag-sidebar-blue-end: #0067A8;
+    --aag-sidebar-active: #087CE5;
+    --aag-sidebar-active-rail: #57D5FF;
+    --aag-sidebar-text: #FFFFFF;
+    --aag-sidebar-muted: #C3DEEF;
+    --aag-sidebar-hover: rgba(255, 255, 255, .13);
+    --aag-radius-sm: 6px;
+    --aag-radius-md: 10px;
+    --aag-radius-lg: 14px;
+    --aag-shadow-sm: 0 2px 6px rgba(0, 51, 102, .07);
+    --aag-shadow-md: 0 10px 24px rgba(0, 51, 102, .12);
+    --aag-font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}

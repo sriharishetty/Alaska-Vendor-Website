@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Operations | Ground Stop Apps</title>
+    <link rel="icon" type="image/png" href="public/images/favicon.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/design-tokens.css">
+    <link rel="stylesheet" href="css/airline-theme.css">
+    <link rel="stylesheet" href="css/ground-stops.css">
+    <link rel="stylesheet" href="css/motion.css">
+    <script defer src="js/motion.js"></script>
+    <script defer src="js/sidebar-active.js"></script>
+</head>
+<body class="scroll-shell ground-stops-page">
+    <aside class="sidebar ias-sidebar" aria-label="Main navigation">
+        <a class="sidebar-brand" href="home.html" aria-label="Alaska Airlines home">
+            <img class="sidebar-alaska-logo" src="public/alaska-logo-white.svg" alt="Alaska Airlines">
+        </a>
+
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-item" aria-label="Home" title="Home">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+                </span>
+                <span>Home</span>
+            </a>
+            <div class="nav-dropdown" data-nav-dropdown="vendors">
+                <a href="vendors.html" class="nav-item nav-dropdown-toggle" aria-expanded="false" aria-label="Vendors & Partners" title="Vendors & Partners">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </span>
+                    <span>Vendors &amp; Partners</span>
+                    <span class="nav-chevron" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                </a>
+                <div class="nav-dropdown-menu" role="group" aria-label="Vendors & Partners submenu">
+                    <a href="vendor-maintenance.html" class="nav-subitem" data-vendor-subitem="maintenance">
+                        <span class="nav-subicon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </span>
+                        <span>Vendor Maintenance</span>
+                    </a>
+                    <a href="vendor-case-status.html" class="nav-subitem" data-vendor-subitem="case-status">
+                        <span class="nav-subicon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+                        </span>
+                        <span>Vendor Case Status</span>
+                    </a>
+                </div>
+            </div>
+            <a href="categories.html" class="nav-item" aria-label="System Categories" title="System Categories">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                </span>
+                <span>System Categories</span>
+            </a>
+            <a href="ground-stops.html" class="nav-item active" aria-current="page" aria-label="Operations Directory" title="Operations Directory">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                </span>
+                <span>Operations Directory</span>
+            </a>
+            <a href="favorites.html" class="nav-item" aria-label="My Favorites" title="My Favorites">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>
+                </span>
+                <span>My Favorites</span>
+            </a>
+            <a href="reports.html" class="nav-item" aria-label="Reports & Analytics" title="Reports & Analytics">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M6 20v-6M12 20V10M18 20V4"/></svg>
+                </span>
+                <span>Reports &amp; Analytics</span>
+            </a>
+            <a href="admin-react-dist/index.html" class="nav-item" aria-label="Admin Settings" title="Admin Settings">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                <span>Admin Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p class="sidebar-quote">PEOPLE.<br>PLANES.<br>PARTNERS.<br>TOMORROW.</p>
+            <p class="sidebar-copyright">Stronger operations<br>for a brighter tomorrow.</p>
+        </div>
+    </aside>
+
+    <main class="main-content ias-main-content ground-stops-main">
+        <header class="ias-page-hero" aria-labelledby="ground-stops-page-title">
+            <div class="ias-page-hero-copy">
+                <p class="ias-page-hero-eyebrow">PRODUCTION OPERATIONS</p>
+                <h1 id="ground-stops-page-title">Ground Stop Applications</h1>
+                <p class="ias-page-hero-subtitle">Critical systems keeping Alaska Airlines moving.</p>
+                <p class="ias-page-hero-description">Quick access to operational applications, support contacts, response targets, and escalation information.</p>
+            </div>
+            <div class="ias-page-hero-slogan" aria-label="People. Planes. A brighter tomorrow.">
+                <span>PEOPLE.</span><span>PLANES.</span><span>A BRIGHTER</span><span>TOMORROW.</span>
+            </div>
+        </header>
+
+        <!-- =================================================
+             TOP 4 KPI SUMMARY CARDS
+             ================================================= -->
+        <section class="ground-stop-stats" aria-label="Ground Stop application summary">
+            <article class="ground-stop-stat-card">
+                <span class="ground-stop-stat-icon blue" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                </span>
+                <span class="ground-stop-stat-copy">
+                    <strong id="groundStopTotalStat">9</strong>
+                    <span>Ground Stop Applications</span>
+                    <small>Critical operational systems</small>
+                </span>
+            </article>
+
+            <article class="ground-stop-stat-card">
+                <span class="ground-stop-stat-icon green" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="28" height="28">
+                        <circle cx="12" cy="12" r="10" fill="#10B981"/>
+                        <path d="m8 12.2 2.6 2.6 5.4-5.6" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="ground-stop-stat-copy">
+                    <strong id="groundStopActiveStat">9</strong>
+                    <span>Active Applications</span>
+                    <small>All systems operational</small>
+                </span>
+            </article>
+
+            <article class="ground-stop-stat-card">
+                <span class="ground-stop-stat-icon orange" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="28" height="28">
+                        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" fill="#EA580C"/>
+                        <line x1="12" y1="9" x2="12" y2="13.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+                        <circle cx="12" cy="17" r="1.2" fill="#FFFFFF"/>
+                    </svg>
+                </span>
+                <span class="ground-stop-stat-copy">
+                    <strong id="groundStopHighSeverityStat">0</strong>
+                    <span>High Severity</span>
+                    <small>Requiring attention</small>
+                </span>
+            </article>
+
+            <article class="ground-stop-stat-card">
+                <span class="ground-stop-stat-icon sky" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="13" r="8"/>
+                        <path d="M12 9v4l2.5 2"/>
+                        <path d="M10 2h4"/>
+                        <path d="M12 2v3"/>
+                        <path d="m19 5-1.5 1.5"/>
+                    </svg>
+                </span>
+                <span class="ground-stop-stat-copy">
+                    <strong id="groundStopAverageSlaStat">15 min</strong>
+                    <span>Average Response SLA</span>
+                    <small>For critical systems</small>
+                </span>
+            </article>
+        </section>
+
+        <!-- =================================================
+             SEARCH & FILTER BAR + 3x3 CARDS GRID
+             ================================================= -->
+        <section class="ground-stop-directory" aria-label="Ground Stop applications directory">
+            <div class="ground-stop-filter-bar" role="region" aria-label="Filter applications">
+                <label class="ground-stop-search">
+                    <span class="gs-search-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.3-4.3"/>
+                        </svg>
+                    </span>
+                    <input id="groundStopSearch" type="search" placeholder="Search applications, vendors, or keywords..." autocomplete="off">
+                </label>
+
+                <div class="ground-stop-filter-controls">
+                    <div class="gs-select-wrap">
+                        <span class="gs-select-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12h4l3-8 4 16 3-8h4"/>
+                            </svg>
+                        </span>
+                        <select id="groundStopAppFilter" class="gs-filter-select" aria-label="Filter by application">
+                            <option value="">All Applications</option>
+                        </select>
+                        <span class="gs-select-chevron" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
+                    </div>
+
+                    <div class="gs-select-wrap">
+                        <span class="gs-select-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="6" rx="1.5"/>
+                                <rect x="3" y="14" width="18" height="6" rx="1.5"/>
+                                <line x1="7" y1="7" x2="7.01" y2="7"/>
+                                <line x1="7" y1="17" x2="7.01" y2="17"/>
+                            </svg>
+                        </span>
+                        <select id="groundStopStatusFilter" class="gs-filter-select" aria-label="Filter by status">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="operational">Operational</option>
+                        </select>
+                        <span class="gs-select-chevron" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
+                    </div>
+
+                    <div class="gs-select-wrap">
+                        <span class="gs-select-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </span>
+                        <select id="groundStopSeverityFilter" class="gs-filter-select" aria-label="Filter by severity">
+                            <option value="">All Severity</option>
+                            <option value="critical">Critical</option>
+                            <option value="high">High</option>
+                            <option value="standard">Standard</option>
+                        </select>
+                        <span class="gs-select-chevron" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
+                    </div>
+
+                    <button id="groundStopClearFilters" class="gs-clear-btn" type="button">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12a9 9 0 1 1-2.64-6.36"/>
+                            <polyline points="21 3 21 9 15 9"/>
+                        </svg>
+                        <span>Clear Filters</span>
+                    </button>
+                </div>
+            </div>
+
+            <section class="ground-stop-grid" id="groundStopGrid" aria-label="Ground Stop applications"></section>
+
+            <div class="ground-stop-empty" id="groundStopEmpty" hidden>
+                <strong>No applications found</strong>
+                <span>Try another application, vendor, or filter.</span>
+            </div>
+        </section>
+    </main>
+
+    <dialog class="ground-stop-dialog" id="groundStopDialog" aria-labelledby="groundStopDialogTitle">
+        <div class="ground-stop-dialog-shell">
+            <header class="ground-stop-dialog-header">
+                <div class="ground-stop-dialog-icon" id="groundStopDialogLogoWrap">
+                    <img id="groundStopDialogIcon" alt="">
+                </div>
+                <div class="ground-stop-dialog-heading">
+                    <p>APPLICATION DETAILS</p>
+                    <h2 id="groundStopDialogTitle">Application</h2>
+                    <p class="ground-stop-dialog-description" id="groundStopDialogDescription" hidden></p>
+                </div>
+                <div class="ground-stop-dialog-status">
+                    <span class="ground-stop-severity" id="groundStopSeverity"></span>
+                    <span class="ground-stop-operational-status" id="groundStopStatus"></span>
+                    <button class="ground-stop-dialog-close" id="groundStopDialogClose" type="button" aria-label="Close details">×</button>
+                </div>
+            </header>
+            <div class="ground-stop-dialog-tabs" role="tablist" aria-label="Application details">
+                <button type="button" role="tab" id="groundStopTabContacts" aria-controls="groundStopDialogBody" aria-selected="true" tabindex="0" data-detail-tab="contacts">Contacts</button>
+                <button type="button" role="tab" id="groundStopTabOverview" aria-controls="groundStopDialogBody" aria-selected="false" tabindex="-1" data-detail-tab="overview">Overview</button>
+                <button type="button" role="tab" id="groundStopTabSupport" aria-controls="groundStopDialogBody" aria-selected="false" tabindex="-1" data-detail-tab="support">SLA &amp; Support</button>
+                <button type="button" role="tab" id="groundStopTabEscalation" aria-controls="groundStopDialogBody" aria-selected="false" tabindex="-1" data-detail-tab="escalation">Escalation</button>
+                <button type="button" role="tab" id="groundStopTabDocuments" aria-controls="groundStopDialogBody" aria-selected="false" tabindex="-1" data-detail-tab="documents">Documents</button>
+            </div>
+            <main class="ground-stop-dialog-body" id="groundStopDialogBody" role="tabpanel" aria-labelledby="groundStopTabContacts" tabindex="0"></main>
+            <footer class="ground-stop-dialog-footer">
+                <div class="ground-stop-dialog-actions">
+                    <a class="ground-stop-email-action" id="groundStopEmailAction">Send Email</a>
+                    <a class="ground-stop-call-action" id="groundStopCallAction">Call Support</a>
+                    <span class="ground-stop-data-source">DATA SOURCE <strong>Application master data</strong></span>
+                </div>
+                <button class="ground-stop-favorite-action" id="groundStopFavoriteAction" type="button"><span aria-hidden="true">☆</span><span>Add to Favorites</span></button>
+            </footer>
+        </div>
+    </dialog>
+
+    <script src="js/data/master-data.js"></script>
+    <script src="js/ground-stop-app-keys.js"></script>
+    <script src="js/ground-stops.js"></script>
+</body>
+</html>

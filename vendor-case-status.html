@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vendor Case Status — Access vendor support portals, case tracking systems, and operational application relationships across all 37 vendor records.">
+    <title>Vendor Case Status | Production Operations Connect</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/design-tokens.css">
+    <link rel="stylesheet" href="css/airline-theme.css">
+    <link rel="stylesheet" href="css/vendors.css">
+    <link rel="stylesheet" href="css/vendor-case-status.css">
+    <link rel="stylesheet" href="css/motion.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="ias-portal vendors-page">
+
+    <!-- Global Navigation Sidebar -->
+    <aside class="sidebar">
+        <a class="sidebar-brand" href="home.html" aria-label="Alaska Airlines">
+            <img class="sidebar-alaska-logo" src="public/alaska-logo-white.svg" alt="Alaska Airlines">
+        </a>
+
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-item" aria-label="Home" title="Home">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9.8V20h14V9.8"/><path d="M9 20v-6h6v6"/></svg>
+                </span>
+                <span>Home</span>
+            </a>
+            <div class="nav-dropdown is-open" data-nav-dropdown="vendors">
+                <a href="vendors.html" class="nav-item nav-dropdown-toggle" aria-label="Vendors & Partners" title="Vendors & Partners" aria-expanded="true">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M14.5 19a4.5 4.5 0 0 1 6-4.2"/></svg>
+                    </span>
+                    <span>Vendors &amp; Partners</span>
+                    <span class="nav-chevron" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                </a>
+                <div class="nav-dropdown-menu" role="group" aria-label="Vendors & Partners submenu">
+                    <a href="vendor-maintenance.html" class="nav-subitem" data-vendor-subitem="maintenance">
+                        <span class="nav-subicon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </span>
+                        <span>Vendor Maintenance</span>
+                    </a>
+                    <a href="vendor-case-status.html" class="nav-subitem active" data-vendor-subitem="case-status" aria-current="page">
+                        <span class="nav-subicon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+                        </span>
+                        <span>Vendor Case Status</span>
+                    </a>
+                </div>
+            </div>
+            <a href="categories.html" class="nav-item" aria-label="System Categories" title="System Categories">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                </span>
+                <span>System Categories</span>
+            </a>
+            <a href="ground-stops.html" class="nav-item" aria-label="Operations Directory" title="Operations Directory">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                </span>
+                <span>Operations Directory</span>
+            </a>
+            <a href="favorites.html" class="nav-item" aria-label="My Favorites" title="My Favorites">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m12 3.5 2.7 5.47 6.03.88-4.36 4.25 1.03 6-5.4-2.84-5.4 2.84 1.03-6L3.27 9.85l6.03-.88L12 3.5Z"/></svg>
+                </span>
+                <span>My Favorites</span>
+            </a>
+            <a href="reports.html" class="nav-item" aria-label="Reports & Analytics" title="Reports & Analytics">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M5 19V11"/><path d="M12 19V5"/><path d="M19 19v-8"/></svg>
+                </span>
+                <span>Reports &amp; Analytics</span>
+            </a>
+            <a href="admin-react-dist/index.html" class="nav-item" aria-label="Admin Settings" title="Admin Settings">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .3 1.7 1.7 0 0 0-.67 1.38V21a2 2 0 1 1-4 0v-.08A1.7 1.7 0 0 0 8 19.4a1.7 1.7 0 0 0-1.87.34l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.3-1 1.7 1.7 0 0 0-1.38-.67H2.8a2 2 0 1 1 0-4h.08A1.7 1.7 0 0 0 4.6 8a1.7 1.7 0 0 0-.34-1.87l-.05-.05a2 2 0 1 1 2.83-2.83l.05.05A1.7 1.7 0 0 0 9 4.6c.35 0 .7-.1 1-.3.4-.28.65-.73.67-1.22V3a2 2 0 1 1 4 0v.08c.02.49.27.94.67 1.22.3.2.65.3 1 .3a1.7 1.7 0 0 0 1.87-.34l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.7 1.7 0 0 0 19.4 9c0 .35.1.7.3 1 .28.4.73.65 1.22.67H21a2 2 0 1 1 0 4h-.08c-.49.02-.94.27-1.22.67-.2.3-.3.65-.3 1Z"/></svg>
+                </span>
+                <span>Admin Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p class="sidebar-quote">PEOPLE.<br>PLANES.<br>PARTNERS.<br>TOMORROW.</p>
+            <p class="sidebar-copyright">Stronger operations<br>for a brighter tomorrow.</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Container (React Mounted) -->
+    <main class="main-content ias-main-content vendors-main" id="vendor-case-status-root"></main>
+
+    <!-- Master Data & Navigation Scripts -->
+    <script src="js/data/master-data.js"></script>
+    <script src="js/sidebar-active.js"></script>
+    <script src="js/vendor-case-status.bundle.js"></script>
+</body>
+</html>
+

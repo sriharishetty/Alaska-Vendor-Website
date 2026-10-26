@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#001B36">
+    <title>Production Operations Connect | Flight Operations Control Hub</title>
+    <link rel="icon" type="image/png" href="public/images/favicon.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/design-tokens.css">
+    <link rel="stylesheet" href="css/airline-theme.css">
+    <link rel="stylesheet" href="css/home-welcome.css">
+    <link rel="stylesheet" href="css/motion.css">
+    <script defer src="js/motion.js"></script>
+    <script defer src="js/sidebar-active.js"></script>
+</head>
+<body class="scroll-shell ias-shell home-page">
+    <!-- GLOBAL SIDEBAR COMPONENT (Persistent Left Column) -->
+    <aside class="sidebar ias-sidebar" aria-label="Main navigation">
+        <a class="sidebar-brand" href="home.html" aria-label="Alaska Airlines home">
+            <img class="sidebar-alaska-logo" src="public/alaska-logo-white.svg" alt="Alaska Airlines">
+        </a>
+
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-item active" aria-current="page" aria-label="Home" title="Home">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+                </span>
+                <span>Home</span>
+            </a>
+            <div class="nav-dropdown" data-nav-dropdown="vendors">
+                <a href="vendors.html" class="nav-item nav-dropdown-toggle" aria-expanded="false" aria-label="Vendors & Partners" title="Vendors & Partners">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </span>
+                    <span>Vendors &amp; Partners</span>
+                    <span class="nav-chevron" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                </a>
+                <div class="nav-dropdown-menu" role="group" aria-label="Vendors & Partners submenu">
+                    <a href="vendor-maintenance.html" class="nav-subitem" data-vendor-subitem="maintenance">
+                        <span class="nav-subicon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </span>
+                        <span>Vendor Maintenance</span>
+                    </a>
+                    <a href="vendor-case-status.html" class="nav-subitem" data-vendor-subitem="case-status">
+                        <span class="nav-subicon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+                        </span>
+                        <span>Vendor Case Status</span>
+                    </a>
+                </div>
+            </div>
+            <a href="categories.html" class="nav-item" aria-label="System Categories" title="System Categories">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                </span>
+                <span>System Categories</span>
+            </a>
+            <a href="ground-stops.html" class="nav-item" aria-label="Operations Directory" title="Operations Directory">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                </span>
+                <span>Operations Directory</span>
+            </a>
+            <a href="favorites.html" class="nav-item" aria-label="My Favorites" title="My Favorites">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>
+                </span>
+                <span>My Favorites</span>
+            </a>
+            <a href="reports.html" class="nav-item" aria-label="Reports & Analytics" title="Reports & Analytics">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M6 20v-6M12 20V10M18 20V4"/></svg>
+                </span>
+                <span>Reports &amp; Analytics</span>
+            </a>
+            <a href="admin-react-dist/index.html" class="nav-item" aria-label="Admin Settings" title="Admin Settings">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                <span>Admin Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p class="sidebar-quote">PEOPLE.<br>PLANES.<br>PARTNERS.<br>TOMORROW.</p>
+            <p class="sidebar-copyright">Stronger operations<br>for a brighter tomorrow.</p>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT CANVAS -->
+    <main class="main-content ias-main-content home-dashboard-main">
+        <!-- 1. TOP UTILITY BAR -->
+        <header class="home-topbar" aria-label="Global search and status bar">
+            <form class="home-search-wrap" id="homeSearchForm" role="search">
+                <svg class="home-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <input id="homeGlobalSearch" type="search" placeholder="Search systems, vendors, contacts, categories..." aria-label="Search systems, vendors, contacts, categories" autocomplete="off">
+            </form>
+
+            <div class="home-topbar-right">
+                <div class="home-op-status">
+                    <span class="home-op-dot" aria-hidden="true"></span>
+                    <span>All Systems Operational</span>
+                </div>
+                <span class="home-topbar-divider" aria-hidden="true"></span>
+                <a href="admin-react-dist/index.html" class="home-profile-btn" aria-label="User profile and settings" title="Admin Control Center">
+                    <span class="home-avatar" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </span>
+                    <svg class="home-avatar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. HERO BANNER -->
+        <section class="home-hero-banner" aria-labelledby="home-page-title">
+            <div class="home-hero-datetime">
+                <div id="homeHeroDate">Mon, Oct 26, 2026</div>
+                <div id="homeHeroTime">10:24 AM (PDT)</div>
+            </div>
+
+            <div class="home-hero-copy">
+                <span class="home-hero-eyebrow">PRODUCTION OPERATIONS CONNECT</span>
+                <h1 id="home-page-title">Operational Excellence<br>Starts Here.</h1>
+                <p>Connecting systems, vendors, and people for safe,<br>reliable, and efficient operations.</p>
+                <div class="home-hero-actions">
+                    <a href="ground-stops.html" class="home-btn-primary">
+                        <span>Explore Systems</span>
+                        <span aria-hidden="true">→</span>
+                    </a>
+                    <a href="vendors.html" class="home-btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <span>Find Vendor Contacts</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="home-hero-pillars" aria-label="Core operational pillars">
+                <div class="home-pillar-card">
+                    <span class="home-pillar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+                    </span>
+                    <span class="home-pillar-label">Safe<br>Operations</span>
+                </div>
+                <div class="home-pillar-card">
+                    <span class="home-pillar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </span>
+                    <span class="home-pillar-label">Reliable<br>Systems</span>
+                </div>
+                <div class="home-pillar-card">
+                    <span class="home-pillar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </span>
+                    <span class="home-pillar-label">Stronger<br>Partnerships</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. KPI STAT CARDS ROW -->
+        <section class="home-kpi-grid" aria-label="Real-time operational metrics">
+            <!-- KPI 1: 9/9 Operational Systems -->
+            <a href="ground-stops.html" class="home-kpi-card kpi-green">
+                <span class="home-kpi-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="8" ry="3"/>
+                        <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
+                        <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/>
+                    </svg>
+                </span>
+                <div class="home-kpi-body">
+                    <div class="home-kpi-value" id="kpi-active-systems">9 / 9</div>
+                    <div class="home-kpi-label">Operational Systems</div>
+                    <div class="home-kpi-meta meta-green">
+                        <span class="meta-dot"></span>
+                        <span>100% Operational</span>
+                    </div>
+                </div>
+                <div class="home-kpi-bars bars-green" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </a>
+
+            <!-- KPI 2: 37 Connected Vendors -->
+            <a href="vendors.html" class="home-kpi-card kpi-blue">
+                <span class="home-kpi-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </span>
+                <div class="home-kpi-body">
+                    <div class="home-kpi-value" id="kpi-vendor-network">37</div>
+                    <div class="home-kpi-label">Connected Vendors</div>
+                    <div class="home-kpi-meta meta-blue">
+                        <span class="meta-dot"></span>
+                        <span>24/7 Support Network</span>
+                    </div>
+                </div>
+                <div class="home-kpi-bars bars-blue" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </a>
+
+            <!-- KPI 3: 11 Operational Domains -->
+            <a href="categories.html" class="home-kpi-card kpi-purple">
+                <span class="home-kpi-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                        <polyline points="2 12 12 17 22 12"/>
+                        <polyline points="2 17 12 22 22 17"/>
+                    </svg>
+                </span>
+                <div class="home-kpi-body">
+                    <div class="home-kpi-value" id="kpi-operational-domains">11</div>
+                    <div class="home-kpi-label">Operational Domains</div>
+                    <div class="home-kpi-meta meta-purple">
+                        <span class="meta-dot"></span>
+                        <span>Full Coverage</span>
+                    </div>
+                </div>
+                <div class="home-kpi-bars bars-purple" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </a>
+
+            <!-- KPI 4: < 15 Mins Escalation SLA Target -->
+            <a href="reports.html" class="home-kpi-card kpi-red">
+                <span class="home-kpi-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/>
+                        <polyline points="12 7 12 12 15 15"/>
+                    </svg>
+                </span>
+                <div class="home-kpi-body">
+                    <div class="home-kpi-value" id="kpi-escalation-sla">&lt; 15 Mins</div>
+                    <div class="home-kpi-label">Escalation SLA Target</div>
+                    <div class="home-kpi-meta meta-red">
+                        <span class="meta-dot"></span>
+                        <span>99.7% Critical Response</span>
+                    </div>
+                </div>
+                <div class="home-kpi-bars bars-red" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </a>
+        </section>
+
+        <!-- 4. MIDDLE TWO-COLUMN SECTION -->
+        <section class="home-middle-grid" aria-label="Ground Stop Applications and System Telemetry">
+            <!-- LEFT: Ground Stop Applications (9 Systems) -->
+            <div class="home-panel home-apps-panel">
+                <div class="home-panel-header">
+                    <div class="home-panel-title-group">
+                        <span class="home-panel-title-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h2 class="home-panel-title">Ground Stop Applications</h2>
+                            <p class="home-panel-subtitle">Quick access to critical operational systems</p>
+                        </div>
+                    </div>
+                    <a href="ground-stops.html" class="home-panel-link">View All Systems →</a>
+                </div>
+
+                <div class="home-apps-rows" id="homeAppsContainer">
+                    <!-- Row 1: 5 Cards -->
+                    <div class="home-apps-row-5">
+                        <a href="ground-stops.html?app=acars" class="home-app-card" data-app-name="ACARS">
+                            <span class="home-app-tile tile-blue" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M13 7 9 3 5 7l4 4"/>
+                                    <path d="m17 11 4 4-4 4-4-4"/>
+                                    <path d="m8 12 4 4 6-6-4-4Z"/>
+                                    <path d="m16 8 3-3"/>
+                                    <path d="M9 21a6 6 0 0 0-6-6"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">ACARS</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=wam" class="home-app-card" data-app-name="WAM">
+                            <span class="home-app-tile tile-red" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">WAM</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=jetplan" class="home-app-card" data-app-name="JetPlan">
+                            <span class="home-app-tile tile-orange" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">JetPlan</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=Smart4Aviation%20(S4A)" class="home-app-card" data-app-name="S4A Smart4Aviation">
+                            <span class="home-app-tile tile-pink" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">S4A</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=jcte" class="home-app-card" data-app-name="JCTE">
+                            <span class="home-app-tile tile-purple" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                    <path d="m9 10 1.5 1.5L14 8"/>
+                                    <path d="M9 15h6"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">JCTE</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+                    </div>
+
+                    <!-- Row 2: 4 Cards -->
+                    <div class="home-apps-row-4">
+                        <a href="ground-stops.html?app=airtrack" class="home-app-card" data-app-name="AirTrack">
+                            <span class="home-app-tile tile-teal" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">AirTrack</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=pilot-briefing" class="home-app-card" data-app-name="Pilot Briefing">
+                            <span class="home-app-tile tile-amber" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="8" r="4"/>
+                                    <path d="M5 20c0-3.87 3.13-7 7-7s7 3.13 7 7"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">Pilot Briefing</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=aircraft-maintenance" class="home-app-card" data-app-name="Aircraft Maintenance">
+                            <span class="home-app-tile tile-sky" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">Aircraft Maintenance</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+
+                        <a href="ground-stops.html?app=aims" class="home-app-card" data-app-name="AIMS">
+                            <span class="home-app-tile tile-navy" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 19v-5M12 19V9M18 19V5"/>
+                                </svg>
+                            </span>
+                            <strong class="home-app-name">AIMS</strong>
+                            <span class="home-app-status"><i aria-hidden="true"></i>Operational</span>
+                            <span class="home-app-cta">View Details →</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: System Status + Recent Updates -->
+            <div class="home-side-stack">
+                <!-- System Status Card -->
+                <div class="home-panel home-status-card">
+                    <div class="home-panel-header compact">
+                        <div class="home-panel-title-group">
+                            <span class="home-panel-title-icon navy-badge" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2 4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.1 13.3-3.2-3.2 1.4-1.4 1.8 1.8 4.2-4.2 1.4 1.4-5.6 5.6z"/>
+                                </svg>
+                            </span>
+                            <h2 class="home-panel-title">System Status</h2>
+                        </div>
+                        <a href="reports.html" class="home-panel-link">View All →</a>
+                    </div>
+
+                    <div class="home-status-list">
+                        <div class="home-status-row">
+                            <span class="status-name"><i class="status-dot"></i>ACARS</span>
+                            <span class="status-state">Operational</span>
+                            <span class="status-uptime">99.98%</span>
+                        </div>
+                        <div class="home-status-row">
+                            <span class="status-name"><i class="status-dot"></i>WAM</span>
+                            <span class="status-state">Operational</span>
+                            <span class="status-uptime">99.99%</span>
+                        </div>
+                        <div class="home-status-row">
+                            <span class="status-name"><i class="status-dot"></i>JetPlan</span>
+                            <span class="status-state">Operational</span>
+                            <span class="status-uptime">99.97%</span>
+                        </div>
+                        <div class="home-status-row">
+                            <span class="status-name"><i class="status-dot"></i>S4A</span>
+                            <span class="status-state">Operational</span>
+                            <span class="status-uptime">99.99%</span>
+                        </div>
+                        <div class="home-status-row">
+                            <span class="status-name"><i class="status-dot"></i>JCTE</span>
+                            <span class="status-state">Operational</span>
+                            <span class="status-uptime">100.00%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Updates Card -->
+                <div class="home-panel home-updates-card">
+                    <div class="home-panel-header compact">
+                        <div class="home-panel-title-group">
+                            <span class="home-panel-title-icon navy-badge" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                                    <rect x="9" y="3" width="6" height="4" rx="1"/>
+                                    <path d="M9 12h6M9 16h6"/>
+                                </svg>
+                            </span>
+                            <h2 class="home-panel-title">Recent Updates</h2>
+                        </div>
+                        <a href="reports.html" class="home-panel-link">View All →</a>
+                    </div>
+
+                    <div class="home-updates-list">
+                        <div class="home-update-row">
+                            <span class="update-badge badge-red" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m10.29 3.86-8.47 14.14A2 2 0 0 0 3.53 21h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </span>
+                            <span class="update-text">WAM maintenance completed</span>
+                            <time class="update-time">2h ago</time>
+                        </div>
+                        <div class="home-update-row">
+                            <span class="update-badge badge-blue" aria-hidden="true">i</span>
+                            <span class="update-text">ACARS performance optimal</span>
+                            <time class="update-time">4h ago</time>
+                        </div>
+                        <div class="home-update-row">
+                            <span class="update-badge badge-blue" aria-hidden="true">i</span>
+                            <span class="update-text">Updated vendor contact – JetPlan</span>
+                            <time class="update-time">6h ago</time>
+                        </div>
+                        <div class="home-update-row">
+                            <span class="update-badge badge-purple" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            </span>
+                            <span class="update-text">New operations guideline published</span>
+                            <time class="update-time">1d ago</time>
+                        </div>
+                        <div class="home-update-row">
+                            <span class="update-badge badge-orange" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m10.29 3.86-8.47 14.14A2 2 0 0 0 3.53 21h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </span>
+                            <span class="update-text">Scheduled maintenance – AIMS (Dec 15)</span>
+                            <time class="update-time">1d ago</time>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. BOTTOM TWO-COLUMN SECTION -->
+        <section class="home-bottom-grid" aria-label="Top Vendor Categories and Quick Links">
+            <!-- LEFT: Top Vendor Categories -->
+            <div class="home-panel home-categories-card">
+                <div class="home-panel-header compact">
+                    <div class="home-panel-title-group">
+                        <span class="home-panel-title-icon navy-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2 4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-2 13-3-3 1.4-1.4 1.6 1.6 4.6-4.6L16 9l-6 6z"/>
+                            </svg>
+                        </span>
+                        <h2 class="home-panel-title">Top Vendor Categories</h2>
+                    </div>
+                    <a href="categories.html" class="home-panel-link">View All →</a>
+                </div>
+
+                <div class="home-cat-mini-grid">
+                    <a href="categories.html" class="home-cat-mini">
+                        <span class="cat-mini-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                            </svg>
+                        </span>
+                        <span class="cat-mini-name">Flight Operations</span>
+                        <strong class="cat-mini-count">8</strong>
+                    </a>
+
+                    <a href="categories.html" class="home-cat-mini">
+                        <span class="cat-mini-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                            </svg>
+                        </span>
+                        <span class="cat-mini-name">Maintenance &amp; Engineering</span>
+                        <strong class="cat-mini-count">6</strong>
+                    </a>
+
+                    <a href="categories.html" class="home-cat-mini">
+                        <span class="cat-mini-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 21h16M6 21V5h12v16M9 8h2m2 0h2M9 12h2m2 0h2M9 16h2m2 0h2M4 5l8-3 8 3"/>
+                            </svg>
+                        </span>
+                        <span class="cat-mini-name">Airports &amp; Ground Ops</span>
+                        <strong class="cat-mini-count">7</strong>
+                    </a>
+
+                    <a href="categories.html" class="home-cat-mini">
+                        <span class="cat-mini-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </span>
+                        <span class="cat-mini-name">IT &amp; Infrastructure</span>
+                        <strong class="cat-mini-count">5</strong>
+                    </a>
+
+                    <a href="categories.html" class="home-cat-mini">
+                        <span class="cat-mini-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </span>
+                        <span class="cat-mini-name">Crew &amp; Scheduling</span>
+                        <strong class="cat-mini-count">4</strong>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT: Quick Links -->
+            <div class="home-panel home-quicklinks-card">
+                <div class="home-panel-header compact">
+                    <div class="home-panel-title-group">
+                        <span class="home-panel-title-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                        </span>
+                        <h2 class="home-panel-title">Quick Links</h2>
+                    </div>
+                </div>
+
+                <div class="home-ql-grid">
+                    <a href="ground-stops.html" class="home-ql-item">
+                        <div class="ql-top">
+                            <span class="ql-icon ql-navy" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                            </span>
+                            <strong class="ql-title">Operations Directory</strong>
+                        </div>
+                        <span class="ql-link">View Contacts</span>
+                    </a>
+
+                    <a href="reports.html" class="home-ql-item">
+                        <div class="ql-top">
+                            <span class="ql-icon ql-blue" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                            </span>
+                            <strong class="ql-title">SLA Guidelines</strong>
+                        </div>
+                        <span class="ql-link">View Details</span>
+                    </a>
+
+                    <a href="vendors.html" class="home-ql-item">
+                        <div class="ql-top">
+                            <span class="ql-icon ql-red" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+                            </span>
+                            <strong class="ql-title">Escalation Process</strong>
+                        </div>
+                        <span class="ql-link">View Steps</span>
+                    </a>
+
+                    <a href="categories.html" class="home-ql-item">
+                        <div class="ql-top">
+                            <span class="ql-icon ql-sky" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                            </span>
+                            <strong class="ql-title">System Categories</strong>
+                        </div>
+                        <span class="ql-link">View All</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/data/master-data.js"></script>
+    <script src="js/ground-stop-app-keys.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

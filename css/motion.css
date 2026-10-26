@@ -1,0 +1,52 @@
+/* Shared, restrained motion for the Production Operations static pages. */
+html { scroll-behavior: smooth; }
+
+body:not(.page-is-leaving) .main-content,
+body:not(.page-is-leaving) .categories-main {
+    animation: production-page-enter .3s ease-out both;
+}
+
+body.page-is-leaving {
+    pointer-events: none;
+}
+
+body.page-is-leaving .main-content,
+body.page-is-leaving .categories-main {
+    animation: production-page-leave .24s ease-in both;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease, background-color .18s ease, border-color .18s ease;
+}
+
+button:active,
+a:active {
+    transform: translateY(1px) scale(.985);
+}
+
+@keyframes production-page-enter {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes production-page-leave {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    body.page-is-leaving { pointer-events: auto; }
+    .main-content,
+    .categories-main { animation: none !important; }
+    a,
+    button,
+    input,
+    select,
+    textarea { transition: none; }
+}
+

@@ -1,0 +1,103 @@
+{
+  "reportType": "SPFx-Step1-Verification-Manifest",
+  "generatedAt": "2026-10-25T23:47:01.168Z",
+  "officialToolchainRequirement": {
+    "spfxVersion": "1.20.0",
+    "supportedNodeLtsVersions": ">=18.17.1 <19.0.0 || >=22.14.0 <23.0.0",
+    "officialCommands": [
+      "npm install",
+      "npx gulp bundle --ship",
+      "npx gulp package-solution --ship"
+    ],
+    "expectedOfficialOutput": "sharepoint/solution/production-operations-connect.sppkg (ZIP/OPC archive)"
+  },
+  "solutionConfig": {
+    "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+    "solution": {
+      "name": "production-operations-connect-client-side-solution",
+      "id": "9f84b3e0-6d2a-4c91-b871-41098a7c1234",
+      "version": "1.0.0.0",
+      "includeClientSideAssets": true,
+      "skipFeatureDeployment": true,
+      "isDomainIsolated": false,
+      "developer": {
+        "name": "ITS Production Operations",
+        "websiteUrl": "",
+        "privacyUrl": "",
+        "termsOfUseUrl": "",
+        "mpnId": "Undefined-1.20.0"
+      },
+      "metadata": {
+        "shortDescription": {
+          "default": "Production Operations Connect enterprise dashboard for vendor directory, operational applications, maintenance updates, case status, favorites, and analytics."
+        },
+        "longDescription": {
+          "default": "Full-bleed SharePoint Framework (SPFx) Web Part providing unified access to Production Operations Connect systems, 37 vendor records, 10 operational applications, vendor maintenance tracking, vendor case status portals, favorites, and executive analytics."
+        },
+        "screenshotPaths": [],
+        "videoUrl": "",
+        "categories": []
+      },
+      "features": [
+        {
+          "title": "Production Operations Connect Web Part Feature",
+          "description": "Activates the Production Operations Connect full-page SPFx Web Part.",
+          "id": "7c54d1a2-3b8f-4e60-9a12-85420f1e5678",
+          "version": "1.0.0.0"
+        }
+      ]
+    },
+    "paths": {
+      "zippedPackage": "solution/production-operations-connect.sppkg"
+    }
+  },
+  "webPartManifest": {
+    "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+    "id": "e41f8b23-9c10-4b65-a234-981273645001",
+    "alias": "ProductionOperationsConnectWebPart",
+    "componentType": "WebPart",
+    "version": "*",
+    "manifestVersion": 2,
+    "requiresCustomScript": false,
+    "supportsFullBleed": true,
+    "supportedHosts": [
+      "SharePointWebPart",
+      "SharePointFullPage",
+      "TeamsPersonalApp",
+      "TeamsTab"
+    ],
+    "supportsThemeVariants": true,
+    "preconfiguredEntries": [
+      {
+        "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+        "group": {
+          "default": "Production Operations"
+        },
+        "title": {
+          "default": "Production Operations Connect"
+        },
+        "description": {
+          "default": "Enterprise airline operations command center for operational applications, 37 vendor records, maintenance notices, case status portals, favorites, and analytics."
+        },
+        "officeFabricIconFontName": "Airplane",
+        "properties": {
+          "siteUrl": "",
+          "defaultView": "home",
+          "enableSharePointLists": false
+        }
+      }
+    ]
+  },
+  "integrityVerification": {
+    "viewsPreservedCount": 9,
+    "vendorsCount": 37,
+    "uniqueVendorSourceRows": 37,
+    "applicationsCount": 10,
+    "groundStopAppKeysCount": 9,
+    "systemCategoriesCount": 11,
+    "publicAssetsCopiedCount": 19,
+    "hardcodedSecretsCount": 0,
+    "workbenchPreviewBundle": "dist/production-operations-connect-webpart.js",
+    "workbenchPreviewStylesheet": "dist/production-operations-connect.css"
+  }
+}

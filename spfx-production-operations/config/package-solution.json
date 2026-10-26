@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "production-operations-connect-client-side-solution",
+    "id": "9f84b3e0-6d2a-4c91-b871-41098a7c1234",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "ITS Production Operations",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "Production Operations Connect enterprise dashboard for vendor directory, operational applications, maintenance updates, case status, favorites, and analytics."
+      },
+      "longDescription": {
+        "default": "Full-bleed SharePoint Framework (SPFx) Web Part providing unified access to Production Operations Connect systems, 37 vendor records, 10 operational applications, vendor maintenance tracking, vendor case status portals, favorites, and executive analytics."
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "Production Operations Connect Web Part Feature",
+        "description": "Activates the Production Operations Connect full-page SPFx Web Part.",
+        "id": "7c54d1a2-3b8f-4e60-9a12-85420f1e5678",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/production-operations-connect.sppkg"
+  }
+}
+

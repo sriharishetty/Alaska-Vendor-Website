@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "e41f8b23-9c10-4b65-a234-981273645001",
+  "alias": "ProductionOperationsConnectWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportsFullBleed": true,
+  "supportedHosts": [
+    "SharePointWebPart",
+    "SharePointFullPage",
+    "TeamsPersonalApp",
+    "TeamsTab"
+  ],
+  "supportsThemeVariants": true,
+  "preconfiguredEntries": [
+    {
+      "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+      "group": {
+        "default": "Production Operations"
+      },
+      "title": {
+        "default": "Production Operations Connect"
+      },
+      "description": {
+        "default": "Enterprise airline operations command center for operational applications, 37 vendor records, maintenance notices, case status portals, favorites, and analytics."
+      },
+      "officeFabricIconFontName": "Airplane",
+      "properties": {
+        "siteUrl": "",
+        "defaultView": "home",
+        "enableSharePointLists": false
+      }
+    }
+  ]
+}
+
