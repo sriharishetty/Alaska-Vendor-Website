@@ -339,7 +339,6 @@ await runTest("11. Existing website routes and sidebar navigation work", async (
   const htmlPages = [
     "home.html",
     "vendors.html",
-    "vendor-maintenance.html",
     "vendor-case-status.html",
     "categories.html",
     "ground-stops.html",

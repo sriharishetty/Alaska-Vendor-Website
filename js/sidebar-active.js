@@ -85,12 +85,6 @@
             menu.setAttribute("role", "group");
             menu.setAttribute("aria-label", "Vendors & Partners submenu");
             menu.innerHTML = `
-                <a href="${hrefPrefix}vendor-maintenance.html" class="nav-subitem" data-vendor-subitem="maintenance">
-                    <span class="nav-subicon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                    </span>
-                    <span>Vendor Maintenance</span>
-                </a>
                 <a href="${hrefPrefix}vendor-case-status.html" class="nav-subitem" data-vendor-subitem="case-status">
                     <span class="nav-subicon" aria-hidden="true">
                         <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
@@ -100,10 +94,9 @@
             `;
             dropdown.appendChild(menu);
         } else {
-            const maintLink = menu.querySelector('[data-vendor-subitem="maintenance"], [data-vendor-view="vendor-maintenance"], a[href*="#vendor-maintenance"], a[href*="vendor-maintenance"]');
+            const maintLink = menu.querySelector('[data-vendor-subitem="maintenance"]');
             if (maintLink) {
-                maintLink.setAttribute("href", `${hrefPrefix}vendor-maintenance.html`);
-                maintLink.setAttribute("data-vendor-subitem", "maintenance");
+                maintLink.remove();
             }
             const caseLink = menu.querySelector('[data-vendor-subitem="case-status"], [data-vendor-view="vendor-case-status"], a[href*="#vendor-case-status"], a[href*="vendor-case-status"]');
             if (caseLink) {
@@ -130,7 +123,7 @@
                 /* Already on vendors.html: if a submenu hash is active, return to
                    main Vendor Directory and keep dropdown open; otherwise toggle dropdown. */
                 event.preventDefault();
-                if (current.hash === "#vendor-maintenance" || current.hash === "#vendor-case-status") {
+                if (current.hash === "#vendor-case-status") {
                     history.pushState(null, "", current.pathname + current.search);
                     dropdown.classList.add("is-open");
                     vendorLink.setAttribute("aria-expanded", "true");
@@ -149,10 +142,6 @@
         const current = new URL(window.location.href);
         const currentPath = normalizePath(current.pathname);
 
-        if (currentPath.endsWith("/vendors.html") && current.hash === "#vendor-maintenance") {
-            window.location.replace("vendor-maintenance.html");
-            return;
-        }
         if (currentPath.endsWith("/vendors.html") && current.hash === "#vendor-case-status") {
             window.location.replace("vendor-case-status.html");
             return;
@@ -175,9 +164,6 @@
             sub.removeAttribute("aria-current");
         });
 
-        const isVendorMaintenancePage =
-            currentPath.endsWith("/vendor-maintenance.html") ||
-            currentPath.endsWith("/vendor-maintenance");
         const isVendorCaseStatusPage =
             currentPath.endsWith("/vendor-case-status.html") ||
             currentPath.endsWith("/vendor-case-status");
@@ -187,7 +173,7 @@
         const plainPage = matchingPage.find(link => !new URL(link.href, current.href).hash);
         const activeLink = exactHash || plainPage || matchingPage[0];
 
-        if (activeLink && !isVendorMaintenancePage && !isVendorCaseStatusPage) {
+        if (activeLink && !isVendorCaseStatusPage) {
             activeLink.classList.add("active");
             activeLink.setAttribute("aria-current", "page");
         }
@@ -195,16 +181,7 @@
         if (dropdown) {
             const toggle = dropdown.querySelector(".nav-dropdown-toggle");
             const isVendorsPage = currentPath.endsWith("/vendors.html");
-            if (isVendorMaintenancePage) {
-                dropdown.setAttribute("data-initialized", "true");
-                dropdown.classList.add("is-open");
-                if (toggle) toggle.setAttribute("aria-expanded", "true");
-                const maintSub = dropdown.querySelector('[data-vendor-subitem="maintenance"]');
-                if (maintSub) {
-                    maintSub.classList.add("active");
-                    maintSub.setAttribute("aria-current", "page");
-                }
-            } else if (isVendorCaseStatusPage) {
+            if (isVendorCaseStatusPage) {
                 dropdown.setAttribute("data-initialized", "true");
                 dropdown.classList.add("is-open");
                 if (toggle) toggle.setAttribute("aria-expanded", "true");

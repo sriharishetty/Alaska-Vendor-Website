@@ -1,13 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import LoginScreen from "./Login.jsx";
 import VendorEditor from "./VendorEditor.jsx";
-import MaintenanceAdminSettingsPanel from "./components/maintenance/MaintenanceAdminSettingsPanel.jsx";
-import {
-  fetchMaintenanceAdminSettings,
-  saveMaintenanceAdminSettings,
-  fetchVendorMaintenanceList,
-  reprocessMaintenanceRecord
-} from "./services/vendorMaintenanceService.js";
 
 const STORAGE = {
   authenticated: "productionOperationsAdminAuthenticated",
@@ -527,13 +520,7 @@ function AdminSidebar() {
             </span>
           </a>
           <div className="nav-dropdown-menu" role="group" aria-label="Vendors & Partners submenu">
-            <a href="../vendor-maintenance.html" className="nav-subitem">
-              <span className="nav-subicon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
-              </span>
-              <span>Vendor Maintenance</span>
-            </a>
-            <a href="../vendor-case-status.html" className="nav-subitem">
+            <a href="../vendor-case-status.html" class="nav-subitem">
               <span className="nav-subicon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" /><rect x="9" y="3" width="6" height="4" rx="1" /><path d="m9 14 2 2 4-4" /></svg>
               </span>
@@ -638,19 +625,6 @@ function App() {
   const [editingApplication, setEditingApplication] = useState(null);
   const [changingPassword, setChangingPassword] = useState(false);
 
-  const [maintenanceSettings, setMaintenanceSettings] = useState(null);
-  const [maintenanceRecords, setMaintenanceRecords] = useState([]);
-  const [savingMaintSettings, setSavingMaintSettings] = useState(false);
-
-  useEffect(() => {
-    fetchMaintenanceAdminSettings().then(res => {
-      if (res?.settings) setMaintenanceSettings(res.settings);
-    }).catch(() => {});
-    fetchVendorMaintenanceList().then(res => {
-      if (Array.isArray(res?.records)) setMaintenanceRecords(res.records);
-    }).catch(() => {});
-  }, []);
-
   useEffect(() => {
     const logout = () => {
       localStorage.removeItem(STORAGE.authenticated);
@@ -725,28 +699,6 @@ function App() {
     localStorage.setItem(STORAGE.history, JSON.stringify(next));
     setEditingApplication(null);
   }
-  async function handleSaveMaintenanceSettings(newSettings) {
-    setSavingMaintSettings(true);
-    try {
-      const saved = await saveMaintenanceAdminSettings(newSettings);
-      setMaintenanceSettings(saved);
-      const item = {
-        action: "Outlook Integration Settings updated",
-        details: `Monitored folder: ${saved.monitoredFolderName || "Vendor Maintenance"} (${(saved.approvedVendorDomains || []).length} approved vendor domains)`,
-        timestamp: new Date().toLocaleString()
-      };
-      const next = [item, ...history].slice(0, 50);
-      setHistory(next);
-      localStorage.setItem(STORAGE.history, JSON.stringify(next));
-    } finally {
-      setSavingMaintSettings(false);
-    }
-  }
-  async function handleReprocessMaintRecord(recordId) {
-    const updated = await reprocessMaintenanceRecord(recordId, window.POC_MASTER_DATA || {});
-    setMaintenanceRecords(prev => prev.map(r => r.id === updated.id ? updated : r));
-    return updated;
-  }
 
   if (!email || localStorage.getItem(STORAGE.authenticated) !== "true") {
     return <LoginScreen onLogin={setEmail} />;
@@ -761,7 +713,7 @@ function App() {
       </header>
       <div className="command-line"><span><i className="online-dot"></i> SYSTEM STATUS: OPERATIONAL</span><span>LAST SYNC · LIVE</span></div>
       <section className="metrics"><Metric value={applications.length} label="APPLICATIONS" detail="Active operational applications" icon="✈" tone="blue" /><Metric value={vendors.length} label="VENDOR RECORDS" detail="Configured vendor contacts" icon="♟" tone="green" /><Metric value={history.length} label="CHANGES" detail="Changes pending review" icon="↻" tone="purple" /></section>
-      <section className="section-block operations-block"><div className="section-heading"><div><small>CONTROL ROOM</small><h2>Operations Overview</h2></div><span>ADMINISTRATION</span></div><div className="module-grid"><OperationModule icon="▣" title="Application Management" description="Configure operational systems" href="#applications" /><OperationModule icon="♟" title="Vendor Management" description="Maintain vendor contacts" href="#vendors" /><OperationModule icon="✉" title="Vendor Maintenance & Outlook" description="Configure Outlook email automation" href="#vendor-maintenance-admin" /><OperationModule icon="↻" title="Recent Changes" description="Track administrative activity" href="#activity" /><OperationModule icon="◉" title="Live Vendor Maintenance" description="Open Vendor Maintenance dashboard" href="../vendor-maintenance.html" /><OperationModule icon="⚙" title="Administrative Tools" description="Security and access controls" href="#admin-tools" /></div></section>
+      <section className="section-block operations-block"><div className="section-heading"><div><small>CONTROL ROOM</small><h2>Operations Overview</h2></div><span>ADMINISTRATION</span></div><div className="module-grid"><OperationModule icon="▣" title="Application Management" description="Configure operational systems" href="#applications" /><OperationModule icon="♟" title="Vendor Management" description="Maintain vendor contacts" href="#vendors" /><OperationModule icon="↻" title="Recent Changes" description="Track administrative activity" href="#activity" /><OperationModule icon="⚙" title="Administrative Tools" description="Security and access controls" href="#admin-tools" /></div></section>
       <section className="section-block" id="applications">
         <div className="section-heading vendor-heading">
           <div>
@@ -1109,22 +1061,6 @@ function App() {
             );
           })}
         </div>
-      </section>
-      <section className="section-block" id="vendor-maintenance-admin">
-        <div className="section-heading">
-          <div>
-            <small>MICROSOFT 365 & POWER AUTOMATE</small>
-            <h2>Vendor Maintenance Email Integration</h2>
-          </div>
-          <a href="../vendor-maintenance.html" className="text-action">Open Vendor Maintenance Page →</a>
-        </div>
-        <MaintenanceAdminSettingsPanel
-          settings={maintenanceSettings}
-          onSaveSettings={handleSaveMaintenanceSettings}
-          records={maintenanceRecords}
-          onReprocessRecord={handleReprocessMaintRecord}
-          isSaving={savingMaintSettings}
-        />
       </section>
       <section className="section-block activity-block" id="activity"><div className="section-heading"><div><small>AUDIT TRAIL</small><h2>Recent Activity</h2></div><span>{history.length ? `${history.length} EVENTS` : "NO EVENTS"}</span></div>{history.length ? <div className="activity-list">{history.slice(0, 5).map((item, index) => <div className="activity-item" key={`${item.timestamp}-${index}`}><i></i><div><strong>{item.action}</strong><small>{item.details}</small></div><time>{item.timestamp}</time></div>)}</div> : <div className="empty-activity"><span>✓</span><div><strong>No recent administrative activity.</strong><small>Vendor and application updates will appear here.</small></div></div>}</section>
       <div id="admin-tools" className="dashboard-footer"><span>ALASKA AIRLINES · PRODUCTION OPERATIONS</span><span>SECURE ADMINISTRATIVE ACCESS</span></div>

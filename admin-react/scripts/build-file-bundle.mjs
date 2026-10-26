@@ -496,22 +496,6 @@ async function compileModuleList(modulePaths) {
   return chunks.join("\n\n");
 }
 
-const maintenanceModules = [
-  "types/vendorMaintenance.js",
-  "services/vendorMaintenanceService.js",
-  "components/maintenance/MaintenanceStatusBadge.jsx",
-  "components/maintenance/EmailSourceBadge.jsx",
-  "components/maintenance/MaintenanceSummaryCards.jsx",
-  "components/maintenance/MaintenanceFilters.jsx",
-  "components/maintenance/MaintenanceEmptyState.jsx",
-  "components/maintenance/MaintenanceLoadingState.jsx",
-  "components/maintenance/MaintenanceErrorState.jsx",
-  "components/maintenance/MaintenanceTable.jsx",
-  "components/maintenance/MaintenanceDetailsPanel.jsx",
-  "components/maintenance/MaintenanceAdminSettingsPanel.jsx",
-  "pages/VendorMaintenance.jsx"
-];
-
 await mkdir(resolve(outputDir, "assets"), { recursive: true });
 await mkdir(rootJsDir, { recursive: true });
 
@@ -525,16 +509,6 @@ const reactAliases = `
   var { createRoot } = ReactDOMClient;
   var logo = "../public/images/alaska-logo.png";
 `;
-
-// 1. Build js/vendor-maintenance.bundle.js
-const vmModulesCode = await compileModuleList([
-  ...maintenanceModules,
-  "vendor-maintenance-main.jsx"
-]);
-
-const vmBundle = `${reactPreamble}\n${reactAliases}\n${vmModulesCode}\n})();\n`;
-new vm.Script(vmBundle, { filename: "vendor-maintenance.bundle.js" });
-await writeFile(resolve(rootJsDir, "vendor-maintenance.bundle.js"), vmBundle, "utf8");
 
 // 1b. Build js/vendor-case-status.bundle.js
 const vcsModulesCode = await compileModuleList([
@@ -592,7 +566,6 @@ new vm.Script(vendorsJs, { filename: "vendors.js" });
 // 2. Build admin-react-dist/assets/admin.js
 const adminModulesCode = (
   await compileModuleList([
-    ...maintenanceModules,
     "Login.jsx",
     "VendorEditor.jsx",
     "App.jsx"
@@ -652,7 +625,6 @@ await writeFile(
     <title>Production Operations | Admin</title>
     <link rel="icon" type="image/png" href="../public/images/favicon.png" />
     <link rel="stylesheet" href="./assets/admin.css" />
-    <link rel="stylesheet" href="../css/vendor-maintenance.css" />
   </head>
   <body>
     <div id="root"></div>
@@ -665,4 +637,4 @@ await writeFile(
   "utf8"
 );
 
-console.log("Successfully built and syntax-verified js/vendor-maintenance.bundle.js, js/vendor-case-status.bundle.js, js/reports.bundle.js, and admin-react-dist/assets/admin.js!");
+console.log("Successfully built and syntax-verified js/vendor-case-status.bundle.js, js/reports.bundle.js, js/favorites.bundle.js, and admin-react-dist/assets/admin.js!");

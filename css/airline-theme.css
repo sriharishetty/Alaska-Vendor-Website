@@ -606,7 +606,6 @@ html body.home-page main.home-dashboard-main {
     padding: 12px 16px 14px !important;
 }
 
-html body.vendors-page main#vendor-maintenance-root.main-content.ias-main-content.vendors-main,
 html body.vendors-page main#vendor-case-status-root.main-content.ias-main-content.vendors-main {
     margin-left: 236px !important;
     width: calc(100% - 236px) !important;
